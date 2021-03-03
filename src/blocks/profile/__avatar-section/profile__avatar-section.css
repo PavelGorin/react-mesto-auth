@@ -1,0 +1,24 @@
+.profile__avatar-section {
+  position: relative;
+  border: none;
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0);
+  width: 120px;
+  height: 120px;
+}
+
+.profile__avatar-section:hover .profile__avatar {
+  cursor: pointer;
+  opacity: .5;
+  transition: .2s ease-in;
+}
+
+.profile__avatar-section:hover .profile__avatar-button {
+  display: block;
+}
+
+@media screen and (max-width: 600px) {
+  .profile__avatar-section {
+    margin: auto;
+  }
+}

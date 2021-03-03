@@ -1,0 +1,16 @@
+.element__like {
+  display: inline-flex;
+  border: none;
+  background: white;
+  padding: 0;
+  cursor: pointer;
+}
+
+.element__like:hover {
+  opacity: 0.6;  
+}
+
+.element__like_active {
+  opacity: 1;
+  background: url(https://code.s3.yandex.net/web-code/dom/heart-filled.svg) center no-repeat;
+}

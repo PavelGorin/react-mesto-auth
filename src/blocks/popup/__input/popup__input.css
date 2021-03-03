@@ -1,0 +1,30 @@
+@import url(./_state_error/popup__input_state_error.css);
+
+.popup__input {
+  font-family: 'Inter', ‘Arial’, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  width: 358px;
+  height: 14px;
+  margin-left: 36px;
+  border: none;
+  border-bottom: rgba(0, 0, 0, 0.2) 2px solid;
+  padding-bottom: 13px;
+}
+
+@media screen and (max-width: 600px) {
+  .popup__input {
+    width: 200px;
+    margin-left: 20px;
+    font-size: 12px;
+    line-height: 15px;
+    height: 12px;
+    margin-top: 20px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+

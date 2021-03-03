@@ -1,0 +1,17 @@
+@import url(./__image/element__image.css);
+@import url(./__name/element__name.css);
+@import url(./__like/element__like.css);
+@import url(./__info/element__info.css);
+@import url(./__trash-bin/element__trash-bin.css);
+@import url(./__picture/element__picture.css);
+@import url(./__number-of-likes/element__number-of-likes.css);
+@import url(./__like-box/element__like-box.css);
+@import url(./__trash-bin/element__trash-bin_visible.css);
+@import url(./__trash-bin/element__trash-bin_hidden.css);
+
+.element {
+  border-radius: 10px;
+  background: white;
+  position: relative;
+  max-width: 282px;
+}

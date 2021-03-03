@@ -1,0 +1,20 @@
+.profile__profession {
+  margin: 0;
+  color: white;
+  font-family: 'Inter', ‘Arial’, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  min-width: 250px;
+}
+
+@media screen and (max-width: 600px) {
+  .profile__profession {
+    width: 280px;
+    height: 14px;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+  }
+}

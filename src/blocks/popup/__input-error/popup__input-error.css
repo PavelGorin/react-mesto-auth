@@ -1,0 +1,25 @@
+@import url(./_active/popup__input-error_active.css);
+
+.popup__input-error {
+   margin-left: 36px;
+   margin-right: 36px;
+   margin-top: 5px;
+   font-family: 'Inter', ‘Arial’, sans-serif;
+   font-style: normal;
+   font-weight: normal;
+   font-size: 12px;
+   line-height: 15px;
+   color: #FF0000;
+   opacity: 0;
+   width: 359px;
+  height: 30px;
+  display: block;
+}
+
+@media screen and (max-width: 600px) {
+  .popup__input-error {
+    margin-left: 20px;
+    width: 200px;
+  }
+}
+

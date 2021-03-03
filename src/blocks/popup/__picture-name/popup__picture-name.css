@@ -1,0 +1,16 @@
+.popup__picture-name {
+  color: white;
+  font-family: 'Inter', ‘Arial’, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+  margin: 8px 0 0 45px;
+}
+
+@media screen and (max-width: 600px) {
+  .popup__picture-name {
+    margin-left: 35px;
+    max-width: 240px;
+  }
+}
