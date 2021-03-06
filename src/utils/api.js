@@ -109,7 +109,6 @@ class Api {
       .then(res => {
         return this._getResponseData(res);
       })
-      .catch((err) => console.log(err));
   }
 
   login({ email, password }) {
@@ -125,7 +124,6 @@ class Api {
       .then(res => {
         return this._getResponseData(res);
       })
-      .catch(err => console.log(err));
   }
 
   checkToken(token) {
@@ -139,7 +137,6 @@ class Api {
       .then(res => {
         return this._getResponseData(res);
       })
-      .catch(err => console.log(err))
   }
 
 }

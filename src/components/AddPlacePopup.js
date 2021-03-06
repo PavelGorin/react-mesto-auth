@@ -18,7 +18,6 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
     e.preventDefault();
 
     onAddPlace(name, link);
-    onClose();
     setName('');
     setLink('');
   }

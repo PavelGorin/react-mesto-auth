@@ -81,7 +81,7 @@ function App() {
     api.sendNewCard(name, link)
       .then((newCard) => {
         setCards([newCard, ...cards]);
-
+        closeAllPopups();
       })
       .catch((err) => { console.log(err) });
   }
@@ -129,41 +129,31 @@ function App() {
   function handleRegister(data) {
     api.registration(data)
       .then((res) => {
-        if (res.data) {
-          setIsInfoTooltipOpened(true);
-          setRegisterStatus(true);
-          history.push('/sign-in');
-          setRegisterState(false);
-        } else {
-          setIsInfoTooltipOpened(true);
-          setRegisterStatus(false);
-          setRegisterState(true);
-        }
-
+        setIsInfoTooltipOpened(true);
+        setRegisterStatus(true);
+        history.push('/sign-in');
+        setRegisterState(false);
       })
       .catch((err) => {
+        setIsInfoTooltipOpened(true);
+        setRegisterStatus(false);
+        setRegisterState(true);
         console.log(err);
       })
   }
   function handleLogin(data) {
     api.login(data)
       .then((res) => {
-        console.log(data)
-        if (res.token) {
           localStorage.setItem('jwt', res.token);
           setLoggedIn(true);
           setUsername(data.email);
           history.push('/');
-
-        } else {
-          setLoggedIn(false);
-          setIsInfoTooltipOpened(true);
-          setRegisterStatus(false);
-          setRegisterState(false);
-        }
       })
-
       .catch((err) => {
+        setLoggedIn(false);
+        setIsInfoTooltipOpened(true);
+        setRegisterStatus(false);
+        setRegisterState(false);
         console.log(err);
       })
   }
@@ -182,7 +172,9 @@ function App() {
           history.push('/');
         }
       })
-
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   useEffect(() => {
@@ -191,7 +183,7 @@ function App() {
       handleTokenCheck(jwt);
 
     }
-  }, []);
+  }, [handleTokenCheck]);
 
   return (
     <div className="noclassyet">
