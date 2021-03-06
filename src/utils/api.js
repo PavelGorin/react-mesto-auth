@@ -1,7 +1,9 @@
 class Api {
-  constructor({baseUrl, headers}) {
+  constructor({ baseUrl, token, loginUrl }) {
     this._baseUrl = baseUrl;
-    this._headers = headers;
+    this._token = token;
+    //   this._headers = headers;
+    this._loginUrl = loginUrl;
   }
 
   _getResponseData(res) {
@@ -13,19 +15,22 @@ class Api {
   }
 
   getUserData() {
-    return fetch(`${this._baseUrl}/users/me`, { headers: this._headers })
+    return fetch(`${this._baseUrl}/users/me`, { headers: { authorization: this._token } })
       .then(res => this._getResponseData(res));
   }
 
   getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, { headers: this._headers })
+    return fetch(`${this._baseUrl}/cards`, { headers: { authorization: this._token } })
       .then(res => this._getResponseData(res));
   }
 
   setUserInfo(title, subtitle) {
-    return fetch(`${this._baseUrl}/users/me`, { 
+    return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         name: title,
         about: subtitle
@@ -35,9 +40,12 @@ class Api {
   }
 
   sendNewCard(name, link) {
-    return fetch(`${this._baseUrl}/cards`, { 
+    return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         name: name,
         link: link
@@ -49,15 +57,15 @@ class Api {
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
-      headers: this._headers
+      headers: { authorization: this._token }
     })
-    .then(res => this._getResponseData(res));
+      .then(res => this._getResponseData(res));
   }
 
   setLike(cardId) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'PUT',
-      headers: this._headers,
+      headers: { authorization: this._token }
     })
       .then(res => this._getResponseData(res));
   }
@@ -65,15 +73,18 @@ class Api {
   removeLike(cardId) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'DELETE',
-      headers: this._headers,
+      headers: { authorization: this._token }
     })
       .then(res => this._getResponseData(res));
   }
 
   updateAvatar(avatarLink) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, { 
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         avatar: avatarLink
       })
@@ -85,14 +96,58 @@ class Api {
     console.error(err);
   }
 
+  registration({ email, password }) {
+    return fetch(`${this._loginUrl}signup`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(
+        { email, password }
+      )
+    })
+      .then(res => {
+        return this._getResponseData(res);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  login({ email, password }) {
+    return fetch(`${this._loginUrl}signin`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(
+        { email, password }
+      )
+    })
+      .then(res => {
+        return this._getResponseData(res);
+      })
+      .catch(err => console.log(err));
+  }
+
+  checkToken(token) {
+    return fetch(`${this._loginUrl}users/me`, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+    })
+      .then(res => {
+        return this._getResponseData(res);
+      })
+      .catch(err => console.log(err))
+  }
+
 }
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-19',
-  headers: {
-    authorization: '534a01fb-4115-4a8d-993b-e26c3c7e9d82',
-    'Content-Type': 'application/json'
-  }
+  token: '534a01fb-4115-4a8d-993b-e26c3c7e9d82',
+  loginUrl: 'https://auth.nomoreparties.co/',
 });
 
 export default api;

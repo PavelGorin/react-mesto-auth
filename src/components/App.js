@@ -10,6 +10,11 @@ import EditProfilePopup from './EditProfilePopup';
 import AddPlacePopup from './AddPlacePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import '../index.css';
+import { Route, Switch, useHistory } from "react-router-dom";
+import InfoTooltip from './InfoTooltip';
+import ProtectedRoute from './ProtectedRoute';
+import Login from './Login';
+import Register from './Register';
 
 function App() {
 
@@ -19,6 +24,13 @@ function App() {
   const [currentUser, setCurrentUser] = useState([]);
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(false);
+  const [isInfoTooltipOpened, setIsInfoTooltipOpened] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(null);
+  const [registerStatus, setRegisterStatus] = useState(false)
+  const [registerState, setRegisterState] = useState(false);
+  const [userName, setUsername] = useState('')
+  const history = useHistory();
+
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -31,12 +43,16 @@ function App() {
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(true);
   }
+  function handleSetRegisterState() {
+    setRegisterState(!registerState);
+  }
 
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setSelectedCard(false);
+    setIsInfoTooltipOpened(false);
   }
 
   function handleCardClick(props) {
@@ -110,12 +126,92 @@ function App() {
       });
   }
 
+  function handleRegister(data) {
+    api.registration(data)
+      .then((res) => {
+        if (res.data) {
+          setIsInfoTooltipOpened(true);
+          setRegisterStatus(true);
+          history.push('/sign-in');
+          setRegisterState(false);
+        } else {
+          setIsInfoTooltipOpened(true);
+          setRegisterStatus(false);
+          setRegisterState(true);
+        }
+
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+  function handleLogin(data) {
+    api.login(data)
+      .then((res) => {
+        console.log(data)
+        if (res.token) {
+          localStorage.setItem('jwt', res.token);
+          setLoggedIn(true);
+          setUsername(data.email);
+          history.push('/');
+
+        } else {
+          setLoggedIn(false);
+          setIsInfoTooltipOpened(true);
+          setRegisterStatus(false);
+          setRegisterState(false);
+        }
+      })
+
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  function handleLogout() {
+    localStorage.removeItem('jwt');
+    setLoggedIn(false);
+  }
+
+  function handleTokenCheck(jwt) {
+    api.checkToken(jwt)
+      .then((res) => {
+        setUsername(res.data.email)
+        if (res) {
+          setLoggedIn(true);
+          history.push('/');
+        }
+      })
+
+  }
+
+  useEffect(() => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      handleTokenCheck(jwt);
+
+    }
+  }, []);
+
   return (
     <div className="noclassyet">
       <CurrentUserContext.Provider value={currentUser}>
-        <Header />
-        <Main cards={cards} onCardLike={handleCardLike} onCardDelete={handleCardDelete} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} />
+        <Header userName={userName} handleLogout={handleLogout} handleRegisterState={handleSetRegisterState} registerState={registerState} state={loggedIn} />
+
+        <Switch>
+          <ProtectedRoute exact path='/' component={Main} loggedIn={loggedIn} cards={cards} onCardLike={handleCardLike} onCardDelete={handleCardDelete}
+            onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} />
+
+          <Route path='/sign-up'>
+            <Register handleRegister={handleRegister} />
+          </Route>
+          <Route path='/sign-in'>
+            <Login handleLogin={handleLogin} />
+          </Route>
+        </Switch>
+
         <Footer />
+        <InfoTooltip state={registerStatus} isOpened={isInfoTooltipOpened} onClose={closeAllPopups} />
         <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
         <AddPlacePopup onAddPlace={handleAddPlaceSubmit} isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} />

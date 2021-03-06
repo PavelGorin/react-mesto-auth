@@ -1,0 +1,10 @@
+.popup__auth-block {
+  width: 430px;
+  height: 330px;
+  background-color: white;
+  z-index: 5;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}

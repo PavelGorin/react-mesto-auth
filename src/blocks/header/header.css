@@ -1,7 +1,11 @@
 @import url(./__logo/header__logo.css);
 @import url(./__block/header__block.css);
+@import url(./__link/header__link.css);
+@import url(./__nav/header__nav.css);
+@import url(./__username/header__username.css);
 
 .header {
   background: #000;
+  justify-content: space-between;
 }
 

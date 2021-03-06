@@ -5,6 +5,8 @@
   border-bottom: #545454 solid 1px;
   padding-top: 45px;
   padding-bottom: 41px;
+  justify-content: space-between;
+  display: flex;
 }
 
 @media screen and (max-width: 900px) {

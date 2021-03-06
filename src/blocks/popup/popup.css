@@ -14,6 +14,13 @@
 @import url(./__save-button/_inactive/popup__save-button_inactive.css);
 @import url(./__input/_error-active/popup__input_error-active.css);
 @import url(./__title/_del-card/popup__title_del-card.css);
+@import url(./__alert/popup__alert.css);
+@import url(./_type/popup_type_alert-success.css);
+@import url(./__auth-block/popup__auth-block.css);
+@import url(./__auth-img/popup__auth-img.css);
+@import url(./__title/_black/popup__title_black.css);
+
+
 
 
 .popup {

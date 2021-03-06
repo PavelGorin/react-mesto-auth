@@ -1,7 +1,9 @@
-# Здесь будет ваш проект на Реакте с авторизацией и регистрацией
+# Сайт-портфолио
+## Mesto-react
+Сайт выполнен с применением js-библиотеки React. Сайт в разработке и функционал постоянно дополнятеся.
+Для открытия сайта на компьютере используйте команду npm start (http://localhost:3000).
 
-Используйте ваши предыдущие наработки по проекту Mesto. Это может быть работа 11-го спринта или его улучшенная версия после 2-х последних спринтов. 
-
-Все запросы на авторизацию, регистрацию и проверку токена должны работать через сервис `https://auth.nomoreparties.co`. Остальные запросы, не относящиеся к этой проектной работе могут быть к бэкенду из предыдущих спринтов.
-
-Успехов!
+# Portfolio
+## Mesto-react
+The site is made using the React js-library. The site is under development and the functionality is constantly being updated.
+To open the site on your computer, use the npm start command (http://localhost:3000).
